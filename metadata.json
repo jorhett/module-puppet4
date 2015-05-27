@@ -1,0 +1,44 @@
+{
+  "name": "jorhett-puppet4",
+  "version": "0.1.0",
+  "author": "Jo Rhett",
+  "summary": "Configures Puppet 4 agent, master, server",
+  "license": "BSD-3-Clause",
+  "source": "https://github.com/jorhett/puppet4-module",
+  "issues_url": "https://github.com/jorhett/puppet4-module/issues",
+  "project_page": "https://github.com/jorhett/puppet4-module",
+  "tags": ["puppet4","puppet-server"],
+  "operatingsystem_support": [
+    {
+      "operatingsystem":"RedHat",
+      "operatingsystemrelease":[ "6","7" ]
+    },
+    {
+      "operatingsystem":"CentOS",
+      "operatingsystemrelease":[ "6","7" ]
+    },
+    {
+      "operatingsystem":"OracleLinux",
+      "operatingsystemrelease":[ "6","7" ]
+    },
+    {
+      "operatingsystem":"Scientific",
+      "operatingsystemrelease":[ "6","7" ]
+    },
+    {
+      "operatingsystem":"Debian",
+      "operatingsystemrelease":[ "6","7" ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [ "15.04", "14.10", "14.04", "13.10", "13.04", "12.10", "12.04" ]
+    }
+  ],
+  "requirements": [
+    { "name": "pe", "version_requirement": ">= 3.7.0" },
+    { "name": "puppet", "version_requirement": ">= 3.7.0" }
+  ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 3.2.0" }
+  ]
+}
