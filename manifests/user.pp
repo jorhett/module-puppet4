@@ -4,9 +4,9 @@
 #
 ##Parameters
 #
-# @param [Hash] config Hash of configuration parameters for the [main] block of puppet.conf
+# @param [Hash] config Hash of configuration parameters for the [user] block of puppet.conf
 # * `config`  
-# Hash of key/value Puppet configuration settings for the [main] block of puppet.conf
+# Hash of key/value Puppet configuration settings for the [user] block of puppet.conf
 #  
 # @example Hiera configuration
 #    classes:
@@ -32,14 +32,10 @@ class puppet4::user(
 ) {
   # Write each user configuration option to the puppet.conf file
   $config.each |$setting,$value| {
-    ini_setting { "user $setting":
-      ensure  => present,
-      path    => '/etc/puppetlabs/puppet/puppet.conf',
+    puppet4::inisetting { "user $setting":
       section => 'user',
       setting => $setting,
       value   => $value,
-      require => Package['puppet-agent'],
-      notify  => Exec['configuration-has-changed'],
     }
   }
 }

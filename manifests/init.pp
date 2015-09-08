@@ -51,7 +51,7 @@ class puppet4(
   Integer $collection_version = 1,
   Boolean $repo_enabled       = true,
   String $package_version     = 'latest',
-  Hash[String,String] $config = {}, # common variables for all Puppet classes
+  Hash[String,Optional[String]] $config = {}, # common variables for all Puppet classes
 ) inherits puppet4::params {
 
   # Package collection repo
@@ -73,14 +73,10 @@ class puppet4(
 
   # Write each agent configuration option to the puppet.conf file
   $config.each |$setting,$value| {
-    ini_setting { "main $setting":
-      ensure  => present,
-      path    => '/etc/puppetlabs/puppet/puppet.conf',
+    puppet4::inisetting { "main $setting":
       section => 'main',
       setting => $setting,
       value   => $value,
-      require => Package['puppet-agent'],
-      notify  => Exec['configuration-has-changed'],
     }
   }
 

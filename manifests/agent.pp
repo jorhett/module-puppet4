@@ -44,14 +44,10 @@ class puppet4::agent(
 
   # Write each agent configuration option to the puppet.conf file
   $config.each |$setting,$value| {
-    ini_setting { "agent $setting":
-      ensure  => present,
-      path    => '/etc/puppetlabs/puppet/puppet.conf',
+    puppet4::inisetting { "agent $setting":
       section => 'agent',
       setting => $setting,
       value   => $value,
-      require => Package['puppet-agent'],
-      notify  => Exec['configuration-has-changed'],
     }
   }
 
