@@ -1,13 +1,13 @@
-# puppet
+# puppet4
 
 #### Table of Contents
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with puppet](#setup)
-    * [What puppet affects](#what-puppet-affects)
+3. [Setup - The basics of getting started with puppet4](#setup)
+    * [What puppet4 affects](#what-puppet-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with puppet](#beginning-with-puppet)
+    * [Beginning with puppet4](#beginning-with-puppet)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
@@ -24,7 +24,7 @@ daemons.
 
 This a demonstration module utilizing Puppet 4 features and demonstrating Puppet best practices.
 
-You can view the module documentation at https://rawgit.com/jorhett/puppet4-module/master/doc/index.html
+You can view the module documentation at https://rawgit.com/jorhett/puppet4-module/master/doc/puppet4.html
 
 ## Setup
 
