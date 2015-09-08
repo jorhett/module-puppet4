@@ -81,7 +81,7 @@ class puppet4(
   }
 
   # trigger that services can subscribe to
-  Exec { 'configuration-has-changed':
+  Exec { 'puppet4-configuration-has-changed':
     command     => '/bin/true',
     refreshonly => true,
   }

@@ -57,6 +57,6 @@ define puppet4::inisetting(
     setting => $setting,
     value   => $value,
     require => Package['puppet-agent'],
-    notify  => Exec['configuration-has-changed'],
+    notify  => Exec['puppet4-configuration-has-changed'],
   }
 }

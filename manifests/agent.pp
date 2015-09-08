@@ -55,6 +55,6 @@ class puppet4::agent(
   service { 'puppet':
     ensure    => $status,
     enable    => $enabled,
-    subscribe => [Package['puppet-agent'],Exec['configuration-has-changed']],
+    subscribe => [Package['puppet-agent'],Exec['puppet4-configuration-has-changed']],
   }
 }
