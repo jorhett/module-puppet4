@@ -24,6 +24,8 @@ daemons.
 
 This a demonstration module utilizing Puppet 4 features and demonstrating Puppet best practices.
 
+You can view the module documentation at https://rawgit.com/jorhett/puppet4-module/master/doc/index.html
+
 ## Setup
 
 ### What puppet affects
