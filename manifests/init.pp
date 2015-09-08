@@ -1,64 +1,95 @@
-# ###Class: puppet4
+#Class: puppet4
 #
-# Full description of class puppet4 here.
+# Installs and manages Puppet 4 configuration and package
 #
-# ###Parameters
+##Parameters
 #
-# Document parameters here.
-# @param collection_version Which Package Collection repository to use?
-#  Integer values: 1 (default), ...
+# @param [Integer] collection_version Version of Puppet Package Collection to be used for packages
+# * `collection_version`  
+# Version of Puppet Package Collection to be used for packages
+#  
+# @param [Boolean] repo_enabled Whether or not to enable the Puppet Collection repo in Yum
+# * `repo_enabled`  
+# Whether or not to enable the Puppet Collection repo in Yum. Disabled will still be installed but not used by default.
+#  
+# @param [String] package_version Version of Puppet All-in-One package to be installed
+# * `package_version`  
+# Values: 'latest', 'present', 'absent', or a specific version string
+#  
+# @param [Hash] config Hash of configuration parameters for the [main] block of puppet.conf
+# * `config`  
+# Hash of key/value Puppet configuration settings for the [main] block of puppet.conf
+#  
+##Variables
 #
-# @param repo_enabled Whether to enable the repo
-#  Boolean values: true (default), false
-#  Only useful for systems with the Yum package manager
+# This class includes the puppet4::user` class, which utilizes the following configuration variables
 #
-# @param loglevel Default loglevel
-#  values: debug, info (default), notice, warning, err, alert, emerg, crit, verbose
+# * `user::config`  
+# Hash of key/value Puppet configuration settings for the [user] block of puppet.conf
 #
-# ###Variables
+# @example Hiera configuration
+#    classes:
+#      - puppet4
+#  
+#    puppet4::version: 'latest'
+#    puppet4::config:
+#      loglevel: 'info'
+#      logtarget: 'syslog'
 #
-# Here you should define a list of variables outside this module it uses.
+##Authors
 #
-#  None.
+# @author Jo Rhett https://github.com/jorhett/puppet4-module/issues
+# Jo Rhett, Net Consonance  
+#   report issues to https://github.com/jorhett/puppet4-module/issues
 #
-# ###Examples
+##Copyright
 #
-# @examples Resource style:
-#  class { 'puppet4':
-#    collection_version => 1,
-#    repo_enabled       => true,
-#    loglevel           => 'warning',
-#  }
+# Copyright 2015, Net Consonance  
+# All Rights Reserved
 #
-# @examples Hiera: 
-#  classes:
-#    - puppet4::client
-#    - puppet4::server
-#
-#  puppet4::collection_version: 1
-#  puppet4::repo_enabled      : true
-#  puppet4::loglevel          : warning
-#
-# ###Authors
-#
-# Jo Rhett https://github.com/jorhett/puppet4-module/issues
-#
-# manifests/init.pp
 class puppet4(
-  Integer $collection_version = $::puppet4::params::collection_version,
-  Enum['0','1'] $repo_enabled = $::puppet4::params::repo_enabled,
-  String $loglevel            = $::puppet4::params::loglevel,
-)
-inherits puppet4::params {
-  
-#  if( $facts['os']['family'] == 'RedHat' ) {
-#    yumrepo { "puppetlabs-pc${collection_version}":
-#      ensure   => 'present',
-#      baseurl  => "http://yum.puppetlabs.com/el/7/PC${collection_version}/\$basearch",
-#      descr    => "Puppet Labs PC${collection_version} Repository EL ${facts['os']['release']['major']} - \$basearch",
-#      enabled  => $repo_enabled,
-#      gpgcheck => '1',
-#      gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs',
-#    }
-#  }
+  Integer $collection_version = 1,
+  Boolean $repo_enabled       = true,
+  String $package_version     = 'latest',
+  Hash[String,String] $config = {}, # common variables for all Puppet classes
+) inherits puppet4::params {
+
+  # Package collection repo
+  if( $facts['os']['family'] == 'RedHat' ) {
+    yumrepo { "puppetlabs-pc${collection_version}":
+      ensure   => 'present',
+      baseurl  => "http://yum.puppetlabs.com/el/7/PC${collection_version}/\$basearch",
+      descr    => "Puppet Labs PC${collection_version} Repository EL ${facts['os']['release']['major']} - \$basearch",
+      enabled  => $repo_enabled,
+      gpgcheck => '1',
+      gpgkey   => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-puppetlabs',
+    }
+  }
+
+  # Install the Puppet agent
+  package { 'puppet-agent':
+    ensure => $package_version,
+  }
+
+  # Write each agent configuration option to the puppet.conf file
+  $config.each |$setting,$value| {
+    ini_setting { "main $setting":
+      ensure  => present,
+      path    => '/etc/puppetlabs/puppet/puppet.conf',
+      section => 'main',
+      setting => $setting,
+      value   => $value,
+      require => Package['puppet-agent'],
+      notify  => Exec['configuration-has-changed'],
+    }
+  }
+
+  # trigger that services can subscribe to
+  Exec { 'configuration-has-changed':
+    command     => '/bin/true',
+    refreshonly => true,
+  }
+
+  # Call the user class to get [user] block configs added
+  include puppet4::user
 }

@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="puppet_manifest_list_link"
+        href="puppet_manifest_list.html">
+      Puppet Manifest List
+    </a>
+  
+    <a class="full_list_link" id="puppet_plugin_list_link"
+        href="puppet_plugin_list.html">
+      Puppet Plugin List
+    </a>
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'>
+<h1 id="label-puppet">puppet</h1>
+
+<h4 id="label-Table+of+Contents">Table of Contents</h4>
+<ol><li>
+<p><a href="#overview">Overview</a></p>
+</li><li>
+<p><a href="#module-description">Module Description - What the module does and
+why it is useful</a></p>
+</li><li>
+<p><a href="#setup">Setup - The basics of getting started with puppet</a></p>
+<ul><li>
+<p><a href="#what-puppet-affects">What puppet affects</a></p>
+</li><li>
+<p><a href="#setup-requirements">Setup requirements</a></p>
+</li><li>
+<p><a href="#beginning-with-puppet">Beginning with puppet</a></p>
+</li></ul>
+</li><li>
+<p><a href="#usage">Usage - Configuration options and additional
+functionality</a></p>
+</li><li>
+<p><a href="#reference">Reference - An under-the-hood peek at what the module
+is doing and how</a></p>
+</li><li>
+<p><a href="#limitations">Limitations - OS compatibility, etc.</a></p>
+</li><li>
+<p><a href="#development">Development - Guide for contributing to the
+module</a></p>
+</li></ol>
+
+<h2 id="label-Overview">Overview</h2>
+
+<p>This is a module written to manage Puppet 4 configuration, agent, master,
+and Puppet Server.</p>
+
+<h2 id="label-Module+Description">Module Description</h2>
+
+<p>Installs and configures Puppet 4, and optionally, the agent, master, and
+Puppet Server daemons.</p>
+
+<p>This a demonstration module utilizing Puppet 4 features and demonstrating
+Puppet best practices.</p>
+
+<h2 id="label-Setup">Setup</h2>
+
+<h3 id="label-What+puppet+affects">What puppet affects</h3>
+<ul><li>
+<p>Packages</p>
+</li><li>
+<p>Puppet Package Collection repository</p>
+</li><li>
+<p>Puppet 4 Package</p>
+</li><li>
+<p>Puppet Server Package (optional)</p>
+</li><li>
+<p>Configuration Files</p>
+</li><li>
+<p>/etc/puppetlabs/puppet/puppet.conf</p>
+</li><li>
+<p>/etc/puppetlabs/server/webapp.conf</p>
+</li></ul>
+
+<h3 id="label-Setup+Requirements">Setup Requirements</h3>
+
+<p>Requires the Puppet 4 package to be installed. (catch-22 yes I know) I may
+attempt in the future to test a way to upgrade from Puppet 3 but that is
+has not been tested.</p>
+
+<h3 id="label-Beginning+with+puppet">Beginning with puppet</h3>
+
+<p>Hiera configuration:</p>
+
+<pre class="code ruby"><code class="ruby">classes:
+  - puppet
+  - puppet::agent (optional)</code></pre>
+
+<h2 id="label-Usage">Usage</h2>
+
+<p>Configuration values in Hiera (or supplied by an node terminus):</p>
+<ul><li>
+<p>Common</p>
+</li><li>
+<p><code>puppet::pc_version</code> = Integer version of the Package Collection
+to use</p>
+</li><li>
+<p><code>puppet::version</code> = &#39;latest&#39;, &#39;present&#39;,
+&#39;absent&#39;, or a specific version.</p>
+</li><li>
+<p><code>puppet::config</code> = Hash of configuration parameters for the
+[main] section of puppet.conf</p>
+</li><li>
+<p><code>puppet::user::config</code> = Hash of configuration parameters for
+the [user] section of puppet.conf</p>
+</li><li>
+<p>Agent</p>
+</li><li>
+<p><code>puppet::agent::status</code> = &#39;Running&#39; (default) or
+&#39;Stopped&#39;</p>
+</li><li>
+<p><code>puppet::agent::enabled</code> = true (default) or false</p>
+</li><li>
+<p><code>puppet::agent::config</code> = Hash of configuration parameters for
+the [agent] section of puppet.conf</p>
+</li><li>
+<p>Server</p>
+</li><li>
+<p><code>puppet::server::status</code> = &#39;Running&#39; (default) or
+&#39;Stopped&#39;</p>
+</li><li>
+<p><code>puppet::server::enabled</code> = true (default) or false</p>
+</li><li>
+<p><code>puppet::server::config</code> = Hash of configuration parameters for
+the [master] section of puppet.conf</p>
+</li><li>
+<p>Master</p>
+</li><li>
+<p><code>puppet::master::config</code> = Hash of configuration parameters for
+the [master] section of puppet.conf</p>
+</li></ul>
+
+<h2 id="label-Reference">Reference</h2>
+
+<h3 id="label-Setup+Requirements">Setup Requirements</h3>
+<ul><li>
+<p>Classes</p>
+</li><li>
+<p>puppet - Maintains package repository, puppet package, and [main] block of
+puppet.conf</p>
+</li><li>
+<p>puppet::user - Maintains [user] block of puppet.conf</p>
+</li><li>
+<p>puppet::agent - Maintains [agent] block of puppet.conf and the
+<code>puppet</code> service</p>
+</li><li>
+<p>puppet::master - Maintains [master] block of puppet.conf and the
+<code>puppet-master</code> service</p>
+</li><li>
+<p>puppet::server - Maintains [master] block of puppet.conf and the
+<code>puppetserver</code> service</p>
+</li></ul>
+
+<h2 id="label-Limitations">Limitations</h2>
+
+<p>Uses all features of Puppet 4 therefore only Puppet 4 is supported. May
+possibly work with Puppet 3.7 or higher with the &#39;future&#39; parser
+but is not tested as such.</p>
+
+<h2 id="label-Development">Development</h2>
+
+<p>I&#39;ll accept any good ideas to improve this module which can be
+leveraged by everyone.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Tue Sep  8 04:58:26 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.6).
+</div>
+
+  </body>
+</html>
