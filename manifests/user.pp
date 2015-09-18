@@ -4,7 +4,7 @@
 #
 ##Parameters
 #
-# @param [Hash] config Hash of configuration parameters for the [user] block of puppet.conf
+# @param [Hash[String,String]] config Hash of configuration parameters for the [user] block of puppet.conf
 # * `config`  
 # Hash of key/value Puppet configuration settings for the [user] block of puppet.conf
 #  

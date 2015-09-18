@@ -16,7 +16,7 @@
 # * `package_version`  
 # Values: 'latest', 'present', 'absent', or a specific version string
 #  
-# @param [Hash] config Hash of configuration parameters for the [main] block of puppet.conf
+# @param [Hash[String,Optional[String]]] config Hash of configuration parameters for the [main] block of puppet.conf
 # * `config`  
 # Hash of key/value Puppet configuration settings for the [main] block of puppet.conf
 #  

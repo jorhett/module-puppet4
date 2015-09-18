@@ -4,7 +4,7 @@
 #
 ##Parameters
 #
-# @param [String] status Whether Puppet client should run as a daemon
+# @param [Enum['running','stopped']] status Whether Puppet client should run as a daemon
 # * `status`  
 #   Whether Puppet client should run as a daemon
 #    values: running, stopped
