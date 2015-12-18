@@ -32,7 +32,7 @@ class puppet4::user(
 ) {
   # Write each user configuration option to the puppet.conf file
   $config.each |$setting,$value| {
-    puppet4::inisetting { "user $setting":
+    puppet4::inisetting { "user ${setting}":
       section => 'user',
       setting => $setting,
       value   => $value,

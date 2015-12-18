@@ -81,11 +81,11 @@ class puppet4(
   }
 
   # trigger that services can subscribe to
-  Exec { 'puppet4-configuration-has-changed':
+  exec { 'puppet4-configuration-has-changed':
     command     => '/bin/true',
     refreshonly => true,
   }
 
-  # Call the user class to get [user] block configs added
+  # Call the user class to add the [user] block configs
   include puppet4::user
 }
