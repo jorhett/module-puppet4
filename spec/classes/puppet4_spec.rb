@@ -19,9 +19,16 @@ describe 'puppet4', :type => 'class' do
     end
   end
 
-  ['1','0'].each do |repo_enabled|
+  [true,false].each do |repo_enabled|
     ['emerg','crit','alert','err','warning','notice','info','debug','verbose'].each do |loglevel|
       context "with #{repo_enabled} for repo_enabled, #{loglevel} for loglevel" do
+        let :facts do
+          {
+            :osfamily => 'RedHat',
+            :os       => { 'family' => 'RedHat', 'release' => { 'major' => '7', 'minor' => '1' } },
+          }
+        end
+
         let :params do
           {
             :repo_enabled => repo_enabled,
@@ -42,6 +49,13 @@ describe 'puppet4', :type => 'class' do
   end
 
   context 'with invalid loglevel' do
+    let :facts do
+      {
+        :osfamily => 'RedHat',
+        :os       => { 'family' => 'RedHat', 'release' => { 'major' => '7', 'minor' => '1' } },
+      }
+    end
+
     let :params do
       {
         :loglevel => 'annoying'
@@ -49,12 +63,19 @@ describe 'puppet4', :type => 'class' do
     end
 
     it do
-      should compile.with_all_deps
-      #expect { should raise_error(Puppet::Error,/Invalid value "annoying". Valid values are/) }
+      #should compile.with_all_deps
+      expect { should raise_error(Puppet::Error,/Invalid value "annoying". Valid values are/) }
     end
   end
 
   context 'with invalid repo_enabled' do
+    let :facts do
+      {
+        :osfamily => 'RedHat',
+        :os       => { 'family' => 'RedHat', 'release' => { 'major' => '7', 'minor' => '1' } },
+      }
+    end
+
     let :params do
       {
         :repo_enabled => 'EPEL'
@@ -62,8 +83,8 @@ describe 'puppet4', :type => 'class' do
     end
 
     it do
-      should compile.with_all_deps
-      #expect { should raise_error(Puppet::Error) }
+      #should compile.with_all_deps
+      expect { should raise_error(Puppet::Error) }
     end
   end
 end

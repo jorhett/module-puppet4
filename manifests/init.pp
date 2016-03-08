@@ -48,9 +48,9 @@
 # All Rights Reserved
 #
 class puppet4(
-  Integer $collection_version = 1,
-  Boolean $repo_enabled       = true,
-  String $package_version     = 'latest',
+  Integer $collection_version           = 1,
+  Boolean $repo_enabled                 = true,
+  String $package_version               = 'latest',
   Hash[String,Optional[String]] $config = {}, # common variables for all Puppet classes
 ) inherits puppet4::params {
 
